@@ -55,6 +55,11 @@ static uint16_t read_keyboard_id(void)
     uint16_t id = 0;
     int16_t  code = 0;
 
+    if (ibmpc_protocol == IBMPC_PROTOCOL_AT_Z150) {
+        // Z-150 AT: https://github.com/tmk/tmk_keyboard/wiki/IBM-PC-AT-Keyboard-Protocol#zenith-z-150-at
+        return 0x0000;
+    }
+
     // Disable
     //code = ibmpc_host_send(0xF5);
 
@@ -315,6 +320,7 @@ uint8_t matrix_scan(void)
                 case PC_XT:
                     break;
                 case PC_AT:
+                    if (ibmpc_protocol == IBMPC_PROTOCOL_AT_Z150) { break; }
                     led_set(host_keyboard_leds());
                     break;
                 case PC_TERMINAL:
@@ -436,6 +442,10 @@ void led_set(uint8_t usb_led)
     if (usb_led &  (1<<USB_LED_CAPS_LOCK))
         ibmpc_led |= (1<<IBMPC_LED_CAPS_LOCK);
     ibmpc_host_set_led(ibmpc_led);
+    if (ibmpc_error) {
+        xprintf("\nERR:%02X\n", ibmpc_error);
+        ibmpc_error = IBMPC_ERR_NONE;
+    }
 }
 
 
