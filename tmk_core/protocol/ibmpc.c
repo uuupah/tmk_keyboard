@@ -111,7 +111,7 @@ int16_t ibmpc_host_send(uint8_t data)
     data_lo();
     wait_us(100);
     clock_hi();     // [5]p.54 [clock low]>100us [5]p.50
-    WAIT(clock_lo, 10000, 1);   // [5]p.53, -10ms [5]p.50
+    WAIT(clock_lo, 65000, 1);   // [5]p.53, -10ms [5]p.50
 
     /* Data bit[2-9] */
     for (uint8_t i = 0; i < 8; i++) {
@@ -136,7 +136,7 @@ int16_t ibmpc_host_send(uint8_t data)
     wait_us(15);
     data_hi();
     WAIT(clock_hi, 50, 6);
-    WAIT(clock_lo, 50, 7);
+    WAIT(clock_lo, 65000, 7);
 
     /* Ack */
     WAIT(data_lo, 50, 8);
