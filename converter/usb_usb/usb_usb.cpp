@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "usbhid.h"
 #include "hidboot.h"
 #include "parser.h"
+#include "hidcomposite.h"
 
 #include "keycode.h"
 #include "util.h"
@@ -74,7 +75,47 @@ static bool matrix_is_mod =false;
  * USB Host Shield HID keyboards
  * This supports two cascaded hubs and four keyboards
  */
+
+/////////////////////////
+// From USBHIDMultimediaKbd.ino
+// Override HIDComposite to be able to select which interface we want to hook into
+class HIDSelector : public HIDComposite
+{
+public:
+    HIDSelector(USB *p) : HIDComposite(p) {};
+
+protected:
+    void ParseHIDData(USBHID *hid, uint8_t ep, bool is_rpt_id, uint8_t len, uint8_t *buf); // Called by the HIDComposite library
+    bool SelectInterface(uint8_t iface, uint8_t proto);
+};
+
+// Return true for the interface we want to hook into
+bool HIDSelector::SelectInterface(uint8_t iface, uint8_t proto)
+{
+  if (proto != 0)
+    return true;
+
+  return false;
+}
+
+// Will be called for all HID data received from the USB interface
+void HIDSelector::ParseHIDData(USBHID *hid, uint8_t ep, bool is_rpt_id, uint8_t len, uint8_t *buf) {
+#if 1
+  if (len && buf)  {
+    xprintf("p");
+    Notify(PSTR("\r\n"), 0x80);
+    for (uint8_t i = 0; i < len; i++) {
+      D_PrintHex<uint8_t > (buf[i], 0x80);
+      Notify(PSTR(" "), 0x80);
+    }
+  }
+#endif
+}
+/////////////////////////
+
 USB usb_host;
+HIDSelector    kbd1(&usb_host);
+/*
 HIDBoot<USB_HID_PROTOCOL_KEYBOARD>    kbd1(&usb_host);
 HIDBoot<USB_HID_PROTOCOL_KEYBOARD>    kbd2(&usb_host);
 HIDBoot<USB_HID_PROTOCOL_KEYBOARD>    kbd3(&usb_host);
@@ -83,6 +124,7 @@ KBDReportParser kbd_parser1;
 KBDReportParser kbd_parser2;
 KBDReportParser kbd_parser3;
 KBDReportParser kbd_parser4;
+*/
 USBHub hub1(&usb_host);
 USBHub hub2(&usb_host);
 
@@ -94,10 +136,12 @@ void matrix_init(void) {
     debug_enable = true;
     // USB Host Shield setup
     usb_host.Init();
+/*
     kbd1.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
     kbd2.SetReportParser(0, (HIDReportParser*)&kbd_parser2);
     kbd3.SetReportParser(0, (HIDReportParser*)&kbd_parser3);
     kbd4.SetReportParser(0, (HIDReportParser*)&kbd_parser4);
+*/
 }
 
 static void or_report(report_keyboard_t report) {
@@ -116,6 +160,7 @@ static void or_report(report_keyboard_t report) {
 }
 
 uint8_t matrix_scan(void) {
+/*
     static uint16_t last_time_stamp1 = 0;
     static uint16_t last_time_stamp2 = 0;
     static uint16_t last_time_stamp3 = 0;
@@ -143,6 +188,7 @@ uint8_t matrix_scan(void) {
     } else {
         matrix_is_mod = false;
     }
+*/
 
     uint16_t timer;
     timer = timer_read();
@@ -220,10 +266,12 @@ void matrix_print(void) {
 
 void led_set(uint8_t usb_led)
 {
+/*
     if (kbd1.isReady()) kbd1.SetReport(0, 0, 2, 0, 1, &usb_led);
     if (kbd2.isReady()) kbd2.SetReport(0, 0, 2, 0, 1, &usb_led);
     if (kbd3.isReady()) kbd3.SetReport(0, 0, 2, 0, 1, &usb_led);
     if (kbd4.isReady()) kbd4.SetReport(0, 0, 2, 0, 1, &usb_led);
+*/
 }
 
 // We need to keep doing UHS2 USB::Task() to initialize keyboard
