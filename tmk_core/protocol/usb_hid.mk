@@ -17,9 +17,10 @@ USB_HOST_SHIELD_SRC = \
 #
 # Arduino
 #
-ARDUINO_DIR = $(USB_HID_DIR)/arduino-1.0.1
+ARDUINO_DIR = $(USB_HID_DIR)/arduino-1.8.13
 ARDUINO_CORES_DIR = $(ARDUINO_DIR)/cores/arduino
 ARDUINO_CORES_SRC = \
+	$(ARDUINO_CORES_DIR)/abi.cpp \
 	$(ARDUINO_CORES_DIR)/Print.cpp \
 	$(ARDUINO_CORES_DIR)/Stream.cpp
 
