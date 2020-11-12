@@ -17,12 +17,12 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |Ctrl |Gui |Alt  |       Space            |Alt   |Fn5 |Ctrl |
      * `-----------------------------------------------------------'
      */
-    [0] = ACTIONMAP_AEK( \
+    [0] = KEYMAP_AEK( \
         ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSLS, \
         TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSPC, \
-        LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,FN2, \
+        LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,FN1, \
         LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RSFT, \
-        LCTL,LGUI,LALT,          LT4,                          RALT,RGUI,FN1),
+        LCTL,LGUI,LALT,          SPC,                          RALT,RGUI,FN0),
 
     /* HHKB mode[HHKB Fn]
      * ,-----------------------------------------------------------.
@@ -38,10 +38,10 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------'
      */ 
     [1] = KEYMAP_AEK( \
-        GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, GRV, \
-        CAPS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  PSCR,SLCK,PAUS,UP,  NO,  DEL, \
-        LCTL,VOLD,VOLU,MUTE,NO,  NO,  PAST,PSLS,HOME,PGUP,LEFT,RGHT,TRNS, \
-        LSFT,NO,  NO,  NO,  NO,  NO,  PPLS,PMNS,END, PGDN,DOWN,RSFT, \
+        GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, DEL, \
+        CAPS,MPLY,VOLU,NO,  NO,  NO,  NO,  NO,  NO  ,NO  ,NO  ,UP,  PSCR,TRNS, \
+        LCTL,MPRV,MNXT,NO  ,NO,  NO,  NO  ,NO  ,NO  ,NO  ,LEFT,RGHT,TRNS, \
+        LSFT,VOLD,NO,  NO,  NO,  NO,  NO  ,NO  ,NO  , NO ,DOWN,RSFT, \
         LCTL,LGUI,LALT,          TRNS,                         RALT,RGUI,TRNS),
 
     /* Vi mode[Slash]
@@ -58,11 +58,11 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------'
      */
     [2] = KEYMAP_AEK( \
-        GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, GRV, \
-        TAB, HOME,PGDN,UP,  PGUP,END, HOME,PGDN,PGUP,END, NO,  NO,  NO,  DEL, \
-        LCTL,NO,  LEFT,DOWN,RGHT,NO,  LEFT,DOWN,UP,  RGHT,NO,  NO,  ENT, \
-        LSFT,NO,  NO,  NO,  NO,  NO,  HOME,PGDN,PGUP,END, FN2, RSFT, \
-        LCTL,LGUI,LALT,          SPC,                          RALT,RGUI,RCTL),
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PGUP,TRNS,TRNS, \
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,HOME,END ,TRNS, \
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PGDN,TRNS, \
+        TRNS,TRNS,TRNS,         TRNS,                          TRNS,TRNS,TRNS),
 
 };
 
@@ -89,11 +89,11 @@ const action_t PROGMEM fn_actions[] = {
 /*
  * Macro definition
  */
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+/*const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
     	case default:
     	  break;
     }
     return MACRO_NONE;
-}
+} */
